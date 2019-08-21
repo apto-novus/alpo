@@ -1,5 +1,14 @@
-version: '3'
+version: '3.7'
 services:
+  phpmyadmin:
+    image: 'bitnami/phpmyadmin:4'
+    ports:
+      - '80'
+      - '443'
+    depends_on:
+      - mariadb
+    volumes:
+      - 'phpmyadmin_data:/bitnami'
   mariadb:
     image: 'bitnami/mariadb:10.3'
     environment:
@@ -9,16 +18,18 @@ services:
     volumes:
       - 'mariadb_data:/bitnami'
   suitecrm:
-    image: 'bitnami/suitecrm:7'
+    image: 'aptotude/suitecrm'
     environment:
       - MARIADB_HOST=mariadb
       - MARIADB_PORT_NUMBER=3306
       - SUITECRM_DATABASE_USER=bn_suitecrm
       - SUITECRM_DATABASE_NAME=bitnami_suitecrm
       - ALLOW_EMPTY_PASSWORD=yes
+      - SUITECRM_USERNAME=user
+      - SUITECRM_PASSWORD=bitnami
     ports:
-      - ':80'
-      - ':443'
+      - '80:80'
+      - '443:443'
     volumes:
       - 'suitecrm_data:/bitnami'
     depends_on:
@@ -27,4 +38,6 @@ volumes:
   mariadb_data:
     driver: local
   suitecrm_data:
+    driver: local
+  phpmyadmin_data:
     driver: local
