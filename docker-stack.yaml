@@ -28,8 +28,8 @@ services:
       - SUITECRM_USERNAME=user
       - SUITECRM_PASSWORD=bitnami
     ports:
-      - '80:80'
-      - '443:443'
+      - '80'
+      - '443'
     volumes:
       - 'suitecrm_data:/bitnami'
     depends_on:
